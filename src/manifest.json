@@ -17,7 +17,7 @@
         {
             "all_frames": true,
             "matches": [
-                "<all_urls>"
+                "https://store.steampowered.com/*"
             ],
             "js": [
                 "jquery-1.11.1.min.js",
@@ -27,6 +27,6 @@
         }
     ],
     "permissions": [
-        "https://store.steamcommunity.com/*"
+        "https://store.steampowered.com/*"
     ]
 }
