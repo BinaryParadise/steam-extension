@@ -27,7 +27,6 @@
         }
     ],
     "permissions": [
-        "https://store.steamcommunity.com/*",
-        "activeTab"
+        "https://store.steamcommunity.com/*"
     ]
 }
