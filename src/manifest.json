@@ -1,0 +1,33 @@
+{
+    "name": "Steam Extensions",
+    "description": "Steam消费历史页面当前已加载的CSGO开箱数据统计; 点击页面底部的加载更多历史记录",
+    "version": "1.1",
+    "manifest_version": 2,
+    "browser_action": {
+        "default_popup": "index.html",
+        "default_icon": "extension.png"
+    },
+    "background": {
+        "persistent": true,
+        "scripts": [
+            "background.js"
+        ]
+    },
+    "content_scripts": [
+        {
+            "all_frames": true,
+            "matches": [
+                "<all_urls>"
+            ],
+            "js": [
+                "jquery-1.11.1.min.js",
+                "steam-inject.js"
+            ],
+            "run_at": "document_start"
+        }
+    ],
+    "permissions": [
+        "https://store.steamcommunity.com/*",
+        "activeTab"
+    ]
+}
