@@ -93,5 +93,5 @@ function collectCount($) {
         html += "   </td>"
         html += "<td class='item_count'><span class='history_item_name' style='color: #8650AC;font-weight:bold;'>" + result[key] + " ★</span></td></tr>"
     });
-    return { title: "截止 2020年08月21日 共计开箱 <span style='color: yellow; '>" + count + "</span> 个，预估消费￥" + count * 18.00 + "元", content: html };
+    return { title: "截止 "+new Date().format("yyyy年M月d日")+" 共计开箱 <span style='color: yellow; '>" + count + "</span> 个，预估消费￥" + count * 18.00 + "元", content: html };
 }
