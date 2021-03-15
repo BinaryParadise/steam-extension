@@ -50,18 +50,21 @@ function collectCount($) {
         "反恐精英20周年印花胶囊": "https://community.cloudflare.steamstatic.com/economy/image/-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KU0Zwwo4NUX4oFJZEHLbXU5A1PIYQNqhpOSV-fRPasw8rsQEl9Jg9SpIW1KgRr7PDbI219792mh5WHkrn1NeLTwTxSu8QmiLvEptumiwW1rRE-MGD1JI_AIAA7ZliCqAS9wOzsm9bi65vhLWPP/120x40"
     }
     var mapKey = {
-        "Danger Zone Case Key": "“九头蛇大行动”武器箱",
+        "Danger Zone Case Key": "“头号特训”武器箱钥匙",
         "Prisma 2 Case Key": "棱彩2号武器箱钥匙",
-        "Revolver Case Key": "左轮武器箱钥匙"
+        "Revolver Case Key": "左轮武器箱钥匙",
+        "Glove Case Key": "手套武器箱钥匙",
+        "Clutch Case Key": "命悬一线武器箱钥匙",
+        "Fracture Case Key": "裂空武器箱钥匙"
     }
     var result = {}
     var count = 0
     $('.wallet_table_row.wallet_table_row_amt_change').each(function () {
-        if (($(".wht_type div", this)[0] || {}).innerText == "游戏内购买") {
+        if ($($(".wht_items div", this)[0]).text() == "Counter-Strike: Global Offensive" && ($(".wht_type div", this)[0] || {}).innerText == "游戏内购买") {
             var item = $(".wth_payment", this)[0].innerText.trim()
             if (item.indexOf("钥匙") > 0 || item.indexOf("Case Key") > 0) {
-                var exp = /(\d+)\s([\s\S]+)/.exec(item)
-                var num = exp == null ? 1 : parseInt(exp[1])
+                var exp = /(\d*)\s*([\s\S]+)/.exec(item)
+                var num = exp == null || exp[1] == "" ? 1 : parseInt(exp[1])
                 var key = exp == null ? item : exp[2]
                 if (icons[key] == undefined) {
                     if (mapKey[key] != undefined) {
@@ -93,5 +96,5 @@ function collectCount($) {
         html += "   </td>"
         html += "<td class='item_count'><span class='history_item_name' style='color: #8650AC;font-weight:bold;'>" + result[key] + " ★</span></td></tr>"
     });
-    return { title: "截止 "+new Date().format("yyyy年M月d日")+" 共计开箱 <span style='color: yellow; '>" + count + "</span> 个，预估消费￥" + count * 18.00 + "元", content: html };
+    return { title: "截止 " + new Date().format("yyyy年M月d日") + " 共计开箱 <span style='color: yellow; '>" + count + "</span> 个，预估消费￥" + count * 18.00 + "元", content: html };
 }
