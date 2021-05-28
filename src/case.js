@@ -1,30 +1,35 @@
+// 开箱统计
+
 chrome.runtime.onMessage.addListener(
-    function (request, sender, sendResponse) {
-        if (request.action == "reload") {
-            sendResponse({ state: collectCount($) })
+    function(request, sender, sendResponse) {
+        if (request.action == "request") {
+            var url = new URL(request.url)
+            if (url != null) {
+                console.log(request.url)
+                if (url.pathname == "/account/AjaxLoadMoreHistory/") {
+                    sendResponse(collectCount($))
+                }
+            }
+        } else if (request.action == "onstart") {
+            startAnalytics();
         }
     }
 );
 
-Date.prototype.format = function (fmt) {
-    var o = {
-        "M+": this.getMonth() + 1,                 //月份 
-        "d+": this.getDate(),                    //日 
-        "h+": this.getHours(),                   //小时 
-        "m+": this.getMinutes(),                 //分 
-        "s+": this.getSeconds(),                 //秒 
-        "q+": Math.floor((this.getMonth() + 3) / 3), //季度 
-        "S": this.getMilliseconds()             //毫秒 
-    };
-    if (/(y+)/.test(fmt)) {
-        fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+window.addEventListener('message', e => {
+    console.log(e.data);
+    if (e.source != window || e.data.source != undefined) {
+        return;
     }
-    for (var k in o) {
-        if (new RegExp("(" + k + ")").test(fmt)) {
-            fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
-        }
+    var action = e.data.action
+    if (action == "onstart") {
+        startAnalytics();
     }
-    return fmt;
+});
+
+function startAnalytics() {
+    $(".btn_count").css('display', 'none');
+    $("#case_loading").css('display', 'block');
 }
 
 //统计开箱数据analytics
@@ -79,7 +84,7 @@ function collectCount($) {
     var count = 0
     var amount = 0
     var currency = '￥'
-    $('.wallet_table_row.wallet_table_row_amt_change').each(function () {
+    $('.wallet_table_row.wallet_table_row_amt_change').each(function() {
         // 统计充值卡
         var expamt = /(已购买|Purchased)\s+(\S)(\d+.\d{2})/.exec(this.innerText.trim())
         if (expamt != undefined) {
@@ -110,19 +115,34 @@ function collectCount($) {
 
     })
 
-    keysSorted = Object.keys(result).sort(function (a, b) { return result[b] - result[a] })
+    keysSorted = Object.keys(result).sort(function(a, b) { return result[b] - result[a] })
 
-    var html = "";
-    keysSorted.forEach(function (key) {
-        html += "<tr>"
-        html += "   <td class='item_name'>"
+    var html = `
+    <table class="case_table">
+    <tr>
+    <th colspan=2 class="case_td">${"累计开箱 <span style='color: red;font-weight: bold; '>" + count + "</span> 个，充值合计 <span style='color: orange;'>" + currency + "" + +amount + "</span>"}</th>
+    </tr>
+    `;
+    keysSorted.forEach(function(key) {
+        html += "<tr class='case_td'>"
+        html += "   <td class='case_td item_name'>"
         html += "       <div class='item_group_0'>"
-        // html += "           <img class='item_img'"
-        // html += "               src=" + icons[key] + ">"
-        html += "           <span class='history_item_name' style='color: #D2D2D2'>" + key + "</span>"
+            // html += "           <img class='item_img'"
+            // html += "               src=" + icons[key] + ">"
+        html += "           <span class='case_item_name'>" + key + "</span>"
         html += "       </div>"
         html += "   </td>"
-        html += "<td class='item_count'><span class='history_item_name' style='color: #8650AC;font-weight:bold;'>" + result[key] + " ★</span></td></tr>"
+        html += "<td class='case_td item_count'><span class='case_item_count'>" + result[key] + " ★</span></td></tr>"
     });
-    return { title: "截止 " + new Date().format("yyyy年M月d日") + " 共计开箱 <span style='color: yellow; '>" + count + "</span> 个，充值合计 <span style='color: orange;'>" + currency + "" + + amount + "</span>", content: html };
+    html += "</table>";
+    $("#case_count").html(html);
 }
+
+$("body").append(`
+<div id="case_count">
+<button class="btn_count" onclick="WalletHistory_LoadMore();window.postMessage({action:'onstart'}); return false;">开箱统计</button>
+<div id="case_loading" style="display:none">
+<img src="https://store.st.dl.pinyuncloud.com/public/images/login/throbber.gif">
+</div>
+</div>
+`)

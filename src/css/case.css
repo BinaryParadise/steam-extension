@@ -1,0 +1,49 @@
+#case_count {
+    background: #0197cf;
+    text-align: left;
+    color: #D2E885;
+    font-size: 14px;
+    margin: 0;
+    position: fixed;
+    top: 28px;
+    right: 10px;
+    border-radius: 14px;
+}
+
+.case_table {
+    margin: 10px;
+    border-spacing: 0px;
+}
+
+.case_td {
+    border-spacing: 0px;
+    border: 1px solid rgba(255, 255, 255, 0.685);
+    padding: 4px;
+}
+
+.item_name {
+    width: 80%;
+}
+
+.case_item_name {
+    color: whitesmoke;
+}
+
+.case_item_count {
+    color: pink;
+    width: 20%;
+    font-weight: bold;
+}
+
+.item_group_0 {
+    height: 20px;
+    line-height: 20px;
+}
+
+.btn_count {
+    padding: 5px 10px 5px 10px;
+    border: 1px solid white;
+    border-radius: 14px;
+    background-color: #0197cf;
+    color: white;
+}
