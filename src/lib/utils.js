@@ -1,4 +1,4 @@
-Date.prototype.format = function(fmt) {
+Date.prototype.format = function (fmt) {
     var o = {
         "M+": this.getMonth() + 1, //月份 
         "d+": this.getDate(), //日 
@@ -17,4 +17,19 @@ Date.prototype.format = function(fmt) {
         }
     }
     return fmt;
+}
+
+function toDate(str) {
+    //str eg: 2021年5月22日\t\t\t下午3:39
+    var regex = /(\d{4})年(\d+)月(\d+)日\S*(下午|上午)(\d+):(\d+)/;
+    var matchs = regex.exec(str.replaceAll("\t", ""));
+    matchs = matchs.map((value) => {
+        if (value == "上午") {
+            return 0
+        } else if (value == "下午") {
+            return 12
+        }
+        return parseInt(value)
+    });
+    return new Date(matchs[1], matchs[2] - 1, matchs[3], matchs[4] + matchs[5], matchs[6], 1);
 }

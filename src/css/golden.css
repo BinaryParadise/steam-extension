@@ -1,8 +1,9 @@
-#case_count {
+#golden_list {
     background: #0197cf;
     text-align: left;
-    color: #D2E885;
+    color: rgb(179, 218, 39);
     font-size: 14px;
+    font-weight: bold;
     margin: 0;
     position: fixed;
     top: 28px;
@@ -13,16 +14,13 @@
 .case_table {
     margin: 10px;
     border-spacing: 0px;
+    border-collapse: collapse;
 }
 
 .case_td {
     border-spacing: 0px;
-    border: 1px solid rgba(255, 255, 255, 0.685);
-    padding: 4px;
-}
-
-.item_name {
-    width: 80%;
+    border: 1px dashed rgb(206, 233, 29);
+    padding: 6px;
 }
 
 .case_item_name {
@@ -31,7 +29,7 @@
 
 .case_item_count {
     color: pink;
-    width: 20%;
+    width: 128px;
     font-weight: bold;
 }
 
