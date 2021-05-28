@@ -5,7 +5,7 @@
     "manifest_version": 2,
     "content_scripts": [{
         "matches": [
-            "*://store.steampowered.com/account/*"
+            "*://store.steampowered.com/account/history/*"
         ],
         "js": [
             "lib/jquery-1.11.1.min.js",
@@ -23,7 +23,7 @@
         ]
     },
     "permissions": [
-        "*://store.steampowered.com/account/*",
+        "*://store.steampowered.com/account/history/*",
         "webRequest"
     ]
 }
