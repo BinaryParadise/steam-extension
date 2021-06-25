@@ -35,8 +35,8 @@ function startAnalytics() {
 //统计开箱数据analytics
 function collectCount($) {
     var icons = {
-        "光谱 2 号武器箱钥匙": "https://community.cloudflare.steamstatic.com/economy/image/-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KU0Zwwo4NUX4oFJZEHLbXU5A1PIYQNqhpOSV-fRPasw8rsUFJ5KBFZv668FFY4naeaJGhGtdnmx4Tek_bwY-iFlGlUsJMp3LuTot-mjFGxqUttZ2r3d4eLMlhpnZPxZK0/120x40",
-        "左轮武器箱钥匙": "https://community.cloudflare.steamstatic.com/economy/image/-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KU0Zwwo4NUX4oFJZEHLbXU5A1PIYQNqhpOSV-fRPasw8rsUFJ5KBFZv668FFYwnfKfcG9HvN7iktaOkqD1auLTxD5SvZYgiLvFpo7xjVLh-kdrYWnzcoGLMlhpsyM-5vg/120x40",
+        "光谱 2 号武器箱钥匙": null,
+        "左轮武器箱钥匙": null,
         "棱彩武器箱钥匙": "https://community.cloudflare.steamstatic.com/economy/image/-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KU0Zwwo4NUX4oFJZEHLbXU5A1PIYQNqhpOSV-fRPasw8rsUFJ5KBFZv668FFUynfWaI25G6Ijkl9iPw_SnNrjXw2oBu8cj3b2Qo4_33QbnrUdlYD37ddCLMlhpvs0XIz0/120x40",
         "棱彩2号武器箱钥匙": "https://community.cloudflare.steamstatic.com/economy/image/-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KU0Zwwo4NUX4oFJZEHLbXU5A1PIYQNqhpOSV-fRPasw8rsUFJ5KBFZv668FFUynfWaI25G6Ijkl9iPw_SnNrjXw2oBu8cj3b2Qo4_33QbnrUdlYD37ddCLMlhpvs0XIz0/120x40",
         "手套武器箱钥匙": "https://community.cloudflare.steamstatic.com/economy/image/-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KU0Zwwo4NUX4oFJZEHLbXU5A1PIYQNqhpOSV-fRPasw8rsUFJ5KBFZv668FFY1naTMdzwTtNrukteIkqT2MO_Uwz5Q6cYhibyXo4rw2ALsrkRoYjuncNCLMlhpEV4XDTk/120x40",
@@ -51,13 +51,13 @@ function collectCount($) {
         "光谱武器箱": "https://community.cloudflare.steamstatic.com/economy/image/-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KU0Zwwo4NUX4oFJZEHLbXU5A1PIYQNqhpOSV-fRPasw8rsUFJ5KBFZv668FFY2nfKadD4U7Y7lwYXexaGlYb3QzjlUvZ0k0ujHptug2VbirkRrNW2md4SLMlhph09hpX0/120x40",
         "伽玛 2 号武器箱钥匙": "https://community.cloudflare.steamstatic.com/economy/image/-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KU0Zwwo4NUX4oFJZEHLbXU5A1PIYQNqhpOSV-fRPasw8rsVFx5KAVo5PSkKV4xhfGfKTgVvIXlxNPSwaOmMLiGwzgJvJMniO-Zoo_z2wXg-EVvfSmtc78HsNoy/120x40",
         "“野火大行动”武器箱钥匙": "https://community.cloudflare.steamstatic.com/economy/image/-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KU0Zwwo4NUX4oFJZEHLbXU5A1PIYQNqhpOSV-fRPasw8rsUFJ5KBFZv668FFYxnaeQImRGu4S1x9TawfSmY-iHkmoD7cEl2LiQpIjz3wPl_ERkYWHwLY-LMlhp9pkR_UQ/120x40",
-        "“九头蛇大行动”武器箱钥匙": "",
-        "反恐精英20周年印花胶囊": "",
-        "“狂牙大行动”武器箱钥匙": "",
-        "反恐精英武器箱钥匙": "",
-        "裂空武器箱钥匙": "",
-        "光谱武器箱钥匙": "",
-        "伽玛武器箱钥匙": ""
+        "“九头蛇大行动”武器箱钥匙": null,
+        "反恐精英20周年印花胶囊": null,
+        "“狂牙大行动”武器箱钥匙": null,
+        "反恐精英武器箱钥匙": null,
+        "裂空武器箱钥匙": null,
+        "光谱武器箱钥匙": null,
+        "伽玛武器箱钥匙": null
     }
     var mapKey = {
         "Danger Zone Case Key": "“头号特训”武器箱钥匙",
@@ -117,29 +117,31 @@ function collectCount($) {
 
     keysSorted = Object.keys(result).sort(function(a, b) { return result[b] - result[a] })
 
-    var html = `
-    <table class="case_table">
-    <tr>
-    <th colspan=2 class="case_td">${"累计开箱 <span style='color: red;font-weight: bold; '>" + count + "</span> 个，充值合计 <span style='color: orange;'>" + currency + "" + +amount + "</span>"}</th>
-    </tr>
+    var html = `<table class="case_table">
+        <tr>
+            <th colspan=2 class="case_td">
+                累计开箱 <span style='color: #f1ea0b;font-weight: bold; '>${count}</span> 个，
+                充值合计 <span style='color: orange;font-weight: bold;'>${currency}${amount}</span>
+            </th>
+        </tr>
     `;
+
     keysSorted.forEach(function(key) {
-        html += "<tr class='case_td'>"
-        html += "   <td class='case_td item_name'>"
-        html += "       <div class='item_group_0'>"
-            // html += "           <img class='item_img'"
-            // html += "               src=" + icons[key] + ">"
-        html += "           <span class='case_item_name'>" + key + "</span>"
-        html += "       </div>"
-        html += "   </td>"
-        html += "<td class='case_td item_count'><span class='case_item_count'>" + result[key] + " ★</span></td></tr>"
+        html += `<tr class='case_td'>
+               <td class='case_td item_name'>
+                   <div class='item_group_0'>
+                       <span class='case_item_name'>${key}</span>
+                   </div>
+               </td>
+                <td class='case_td item_count'><span class='case_item_count'>${result[key]}</span></td></tr>
+            `;
     });
-    html += "</table>";
-    $("#case_count").html(html);
+    html += `</table>`;
+    $("#result_list").html(html);
 }
 
 $("body").append(`
-<div id="case_count">
+<div id="result_list">
 <button class="btn_count" onclick="WalletHistory_LoadMore();window.postMessage({action:'onstart'}); return false;">开箱统计</button>
 <div id="case_loading" style="display:none">
 <img src="https://store.st.dl.pinyuncloud.com/public/images/login/throbber.gif">

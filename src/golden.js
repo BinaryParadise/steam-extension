@@ -36,7 +36,7 @@ function loadGoldens() {
         `;
     });
     html += "</table>";
-    $("#golden_list").html(html);
+    $("#result_list").html(html);
 }
 
 function fetchGolden() {
@@ -76,7 +76,7 @@ function appendGolden(data) {
 }
 
 $("body").append(`
-<div id="golden_list">
+<div id="result_list">
 </div>
 `);
 
