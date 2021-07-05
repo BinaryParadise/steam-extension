@@ -9,4 +9,6 @@ Steam消费历史CSGO开箱数据统计
 - 3、然后点击右上角的扩展程序借即可统计
 
 预览
-![](preview.jpg)
+![](preview0.png)
+
+![](preview1.png)

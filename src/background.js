@@ -4,6 +4,7 @@ chrome.webRequest.onCompleted.addListener(details => {
 );
 
 function onRequestCompleted(details) {
+    console.log(details.url)
     chrome.tabs.query({ active: true, currentWindow: true }, function (tab) {//获取当前tab
         if (tab.length == 0) {
             return

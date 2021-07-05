@@ -6,7 +6,7 @@ chrome.runtime.onMessage.addListener(
             var url = new URL(request.url)
             if (url != null) {
                 console.log(request.url)
-                if (url.pathname == "/account/AjaxLoadMoreHistory/") {
+                if (url.pathname.startsWith("/account/AjaxLoadMoreHistory/")) {
                     sendResponse(collectCount($))
                 }
             }
@@ -28,6 +28,10 @@ window.addEventListener('message', e => {
 });
 
 function startAnalytics() {
+    if ($('.wallet_table_row.wallet_table_row_amt_change').length < 20 ) {
+        // 太少了，无法加载更多记录
+        return collectCount($);
+    }
     $(".btn_count").css('display', 'none');
     $("#case_loading").css('display', 'block');
 }
@@ -142,7 +146,7 @@ function collectCount($) {
 
 $("body").append(`
 <div id="result_list">
-<button class="btn_count" onclick="WalletHistory_LoadMore();window.postMessage({action:'onstart'}); return false;">开箱统计</button>
+<button class="btn_count" onclick="window.postMessage({action:'onstart'});WalletHistory_LoadMore(); return false;">开箱统计</button>
 <div id="case_loading" style="display:none">
 <img src="https://store.st.dl.pinyuncloud.com/public/images/login/throbber.gif">
 </div>
