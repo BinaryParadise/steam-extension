@@ -2,7 +2,7 @@
 
 我的B站直播间：https://live.bilibili.com/22447482
 
-[立即下载](https://github.com/BinaryParadise/steam-extension)
+[立即下载](https://github.com/BinaryParadise/steam-extension/releases)
 
 Steam消费历史CSGO开箱数据统计
 
