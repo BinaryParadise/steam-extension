@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Steam-Extension 控制面板</title>
+    <link type="text/css" ref="stylesheet"
+        href="http://src.chromium.org/viewvc/chrome/trunk/src/chrome/renderer/resources/extension_toolstrip.css?view=log">
+</head>
+
+<body>
+
+    <label>
+        <input type="checkbox" id="merge_golden">
+        多账号合并出金数据
+    </label>
+    <br>
+    <label>
+        <input type="checkbox" id="merge_case">
+        多账号合并开箱数据
+    </label>
+
+
+    <div id="status" style="color: green;"></div>
+    <br />
+    <button id="save">保存</button>
+
+    <script src="options.js"></script>
+</body>
+
+</html>

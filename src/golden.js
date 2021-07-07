@@ -1,5 +1,6 @@
 // 出金统计
 
+var localData = undefined
 chrome.runtime.onMessage.addListener(
     function (request, sender, sendResponse) {
         if (request.action == "request") {
@@ -15,28 +16,32 @@ chrome.runtime.onMessage.addListener(
 );
 
 function loadGoldens() {
-    var goldens = fetchGolden()
-    goldens.sort(function (a, b) {
-        return b.time - a.time
+    fetchGolden().then(data => {
+        var html = "";
+        var uid = /(\d+)/.exec(window.location.href)[1]
+        var count = 0;
+        data.goldens.forEach(function (item) {
+            if (data.mergeGolden || item.uid == uid) {
+                count++;
+                html += `
+                <tr class='case_td'>
+                <td class='case_td item_count'>
+                    <span class='case_item_name'>${item.name}</span>
+                </td>
+                <td class='case_td item_name'><span class='case_item_count'>${new Date(item.time).format("yyyy-MM-dd hh:mm")}</span></td></tr>
+                `;
+            }
+        });
+        html = `
+        <table class="case_table">
+        <tr>
+        <th colspan=2 class="case_td">
+            累计出金 <span style='color: #f1ea0b;font-weight: bold; '>${count}</span> 个</span>
+        </th>
+        </tr >` + html;
+        html += "</table>";
+        $("#result_list").html(html);
     });
-    var html = `
-    <table class="case_table">
-    <tr>
-    <th colspan=2 class="case_td">${"累计出金 <span style='color: #f1ea0b;font-weight: bold; '>" + goldens.length + "</span> 个</span>"
-        }</th >
-    </tr >
-    `;
-    goldens.forEach(function (item) {
-        html += `
-        <tr class='case_td'>
-        <td class='case_td item_count'>
-            <span class='case_item_name'>${item.name}</span>
-        </td>
-        <td class='case_td item_name'><span class='case_item_count'>${new Date(item.time).format("yyyy-MM-dd hh:mm")}</span></td></tr>
-        `;
-    });
-    html += "</table>";
-    $("#result_list").html(html);
 }
 
 function fetchGolden() {
@@ -51,28 +56,43 @@ function fetchGolden() {
             }
         }
     });
-    return fetchStorage()
+    return makeStorage()
 }
 
 function fetchStorage() {
-    var goldens = JSON.parse(localStorage.getItem("goldens"))
-    if (goldens == null) {
-        goldens = [];
-    }
-    return goldens;
+    return new Promise(resolve => {
+        if (localData == undefined) {
+            chrome.storage.sync.get({ goldens: [], mergeGolden: false }, function (items) {
+                localData = items;
+                resolve(items);
+            });
+        } else {
+            resolve(localData)
+        }
+    });
 }
 
-function appendGolden(data) {
-    var uid = /(\d+)/.exec(window.location.href)[1]
-    var goldens = fetchStorage();
-    var index = goldens.findIndex(obj => obj.id == data.id)
+function makeStorage() {
+    return new Promise(resolve => {
+        //存储区有大小限制！
+        chrome.storage.sync.set({ "goldens": localData.goldens }, function () {
+            console.log("出金数据保存成功");
+            resolve(localData);
+        });
+    });
+}
+
+function appendGolden(item) {
+    item.uid = /(\d+)/.exec(window.location.href)[1]
+    var index = localData.goldens.findIndex(obj => obj.id == item.id)
     if (index === -1) {
-        goldens.push(data)
+        localData.goldens.push(item)
     } else {
-        goldens.slice(index, data)
+        localData.goldens.slice(index, item)
     }
-    localStorage.setItem("goldens", JSON.stringify(goldens));
-    return goldens;
+    localData.goldens.sort(function (a, b) {
+        return b.time - a.time
+    });
 }
 
 $("body").append(`
@@ -80,4 +100,6 @@ $("body").append(`
 </div>
 `);
 
-loadGoldens();
+fetchStorage().then(data => {
+    loadGoldens();
+});
