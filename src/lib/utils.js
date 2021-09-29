@@ -21,8 +21,11 @@ Date.prototype.format = function (fmt) {
 
 function toDate(str) {
     //str eg: 2021年5月22日\t\t\t下午3:39
-    var regex = /(\d{4})年(\d+)月(\d+)日\S*(下午|上午)(\d+):(\d+)/;
+    var regex = /(\d{4})\s*年\s*(\d)\s*月\s*(\d+)\s*日\S*(上午|下午)\s*(\d+):(\d+)/;
     var matchs = regex.exec(str.replaceAll("\t", ""));
+    if (matchs == null) {
+        return new Date()
+    }
     matchs = matchs.map((value) => {
         if (value == "上午") {
             return 0
