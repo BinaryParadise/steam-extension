@@ -40,7 +40,8 @@ var mapKey = {
     "Prisma 2 Case Key": "棱彩2号武器箱钥匙",
     "Revolver Case Key": "左轮武器箱钥匙",
     "Glove Case Key": "手套武器箱钥匙",
-    "Clutch Case Key": "命悬—线武器箱钥匙",
+    "命悬—线武器箱钥匙": "命悬一线武器箱钥匙",
+    "Clutch Case Key": "命悬一线武器箱钥匙",
     "Fracture Case Key": "裂空武器箱钥匙",
     "Operation Broken Fang Case Key": "“狂牙大行动”武器箱钥匙",
     "Operation Hydra Case Key": "“九头蛇大行动”武器箱钥匙",
@@ -53,7 +54,8 @@ var mapKey = {
     "CS:GO Case Key": "反恐精英武器箱钥匙",
     "CS20 Case Key": "反恐精英20周年武器箱钥匙",
     "Gamma Case Key": "伽马武器箱钥匙",
-    "Gamma 2 Case Key": "伽玛 2 号武器箱钥匙"
+    "Gamma 2 Case Key": "伽玛 2 号武器箱钥匙",
+    "Recoil Case Key": "反冲武器箱钥匙"
 }
 
 var mergeCase = false
@@ -112,10 +114,11 @@ function collectCount($, data) {
     var count = 0
     data.cases.forEach(value => {
         if (mergeCase || value.uid == uid) {
-            if (collect[value.name] == undefined) {
-                collect[value.name] = value.count
+            var key = mapKey[value.name] != undefined ? mapKey[value.name] : value.name;
+            if (collect[key] == undefined) {
+                collect[key] = value.count
             } else {
-                collect[value.name] += value.count
+                collect[key] += value.count
             }
             count += value.count
         }
